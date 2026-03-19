@@ -1,219 +1,211 @@
-# LLM-Powered Healthcare Incident Triage
+# AI Healthcare Incident Triage Agent
 
-A lightweight LLM pipeline that converts healthcare incident narratives into structured safety classifications and triage summaries.
+An AI-powered healthcare incident triage system that combines rule-based logic, large language model (LLM) classification, escalation decision-making, follow-up questioning, persistent logging, analytics, and a Streamlit user interface.
+
+---
 
 ## Overview
 
-Healthcare organizations receive large volumes of safety incident reports written as narrative text. These reports often describe events such as medication errors, patient falls, documentation issues, and communication breakdowns.
+Healthcare organizations receive large volumes of safety incident reports written as unstructured narrative text. These reports often describe events such as medication errors, patient falls, documentation issues, communication breakdowns, and possible infections.
 
-Because these narratives are unstructured, categorizing and triaging incidents consistently can be time-consuming and difficult.
+This project builds an AI triage agent that transforms those narratives into structured outputs and decision workflows.
 
-This project demonstrates a simple **LLM-powered triage pipeline** that converts healthcare incident narratives into structured safety classifications and summaries.
+Unlike a simple LLM pipeline, this system introduces:
 
-The system reads incident narratives from a dataset, uses a **large language model (LLM)** to classify each incident, and compares the results to a **rule-based baseline classifier**.
-
----
-
-## Project Objective
-
-The goal of this project is to build a lightweight pipeline that:
-
-- Loads healthcare incident narratives from a dataset
-- Classifies incidents into safety categories
-- Generates structured summaries and recommended actions
-- Compares LLM predictions with a rule-based baseline
+- Rule-based baseline classification
+- LLM-powered classification using GPT-4o-mini
+- Escalation decision logic
+- Follow-up question handling for ambiguous cases
+- Persistent logging of triage results
+- Analytics for logged incident data
+- Streamlit UI for interactive use
 
 ---
 
-## Pipeline Architecture
+## Key Features
 
-```
-Incident Narratives (CSV)
-        │
-        ▼
-Rule-Based Baseline Classifier
-        │
-        ▼
-LLM Classification (GPT-4o-mini)
-        │
-        ▼
-Structured Incident Triage Output
-        │
-        ▼
-Prediction Dataset + Evaluation
-```
+- Hybrid classification (rule-based + LLM)
+- Escalation decision logic
+- Follow-up question generation for vague inputs
+- CSV logging of all triage results
+- Interactive Streamlit UI
+- Built-in analytics dashboard
 
 ---
 
-## Dataset
+## Agent Workflow
 
-The project uses a small synthetic dataset of healthcare incident narratives.
-
-Example incidents include:
-
-- Medication administration errors
-- Patient falls
-- IV line complications
-- Documentation mistakes
-- Communication delays
-
-Example dataset:
-
-| event_id | event_text |
-|--------|-------------|
-| 1 | Patient received duplicate dose of medication after shift handoff confusion |
-| 2 | Patient slipped while walking to restroom and reported hip pain |
-
----
-
-## Output Fields
-
-Each incident is converted into structured fields:
-
-| Field | Description |
-|------|-------------|
-| incident_category | Type of healthcare safety incident |
-| severity | Estimated severity level |
-| summary | Short summary of the incident |
-| recommended_action | Suggested safety response |
-
-Example output:
-
-| event_id | incident_category | severity | summary |
-|--------|------------------|---------|---------|
-| 1 | medication error | medium | Duplicate medication dose due to shift handoff confusion |
-| 2 | fall | medium | Patient slipped while walking to restroom |
-
-All predictions are saved to:
-
-`outputs/incident_predictions.csv`
+User Input (Incident Narrative)
+            │
+            ▼
+Rule-Based Classifier
+            │
+            ▼
+LLM Classifier (GPT-4o-mini)
+            │
+            ▼
+Follow-Up Question (if needed)
+            │
+            ▼
+Escalation Logic
+            │
+            ▼
+Final Decision + Structured Output
+            │
+            ▼
+Log Results (CSV) + Display in UI
 
 ---
 
-## Baseline vs LLM Comparison
+## Example Output
 
-A simple **rule-based classifier** is implemented using keyword matching to provide a baseline comparison.
+Example Input:
+Patient slipped while getting out of bed and reported hip pain.
 
-Example rules:
-
-```python
-if "medication" in text or "dose" in text:
-    category = "medication error"
-
-if "slip" in text or "fall" in text:
-    category = "fall"
-
-if "IV" in text:
-    category = "line/tube issue"
-
-if "chart" in text or "documentation" in text:
-    category = "documentation error"
-
-The pipeline compares the rule-based prediction to the LLM classification.
-
-### Example Results
-
-| event_id | rule_prediction | incident_category | rule_matches_llm | severity |
-|---------|-----------------|------------------|------------------|----------|
-| 1 | medication error | medication error | TRUE | medium |
-| 2 | fall | fall | TRUE | medium |
-| 3 | line/tube issue | line/tube issue | TRUE | medium |
-| 4 | medication error | documentation error | FALSE | medium |
-| 5 | communication issue | communication issue | TRUE | medium |
-
-Example evaluation metric printed by the pipeline:
-
-Rule vs LLM agreement: 80%
-
-This comparison demonstrates how a large language model can provide more nuanced classification than simple keyword-based rules.
+Example Output:
+- Rule-Based Category: fall
+- LLM Category: fall
+- Severity: medium
+- Escalate: yes
+- Final Decision: Escalate for clinical/safety review
+- Recommended Action: Assess patient for injury and monitor condition
 
 ---
 
 ## Installation
 
-Clone the repository and install the required dependencies.
+Clone the repository and install dependencies:
 
-```bash
 pip install -r requirements.txt
 
+Create a `.env` file in the project root directory:
 
-Create a .env file in the project root directory and add your OpenAI API key:
 OPENAI_API_KEY=your_api_key_here
 
 ---
 
-## Running the Pipeline
+## Running the Application
 
-Run the incident triage pipeline from the project root directory:
+Launch the Streamlit app:
 
-```bash
-python src/test_pipeline.py
-```
+python -m streamlit run app.py
 
-The script will:
+---
 
-1. Load the incident dataset
-2. Run the rule-based baseline classifier
-3. Generate LLM predictions
-4. Compare rule-based and LLM predictions
-5. Export results to a CSV file
+## Using the Application
 
-Example console output:
+1. Enter a healthcare incident narrative
+2. Click "Analyze Incident"
+3. The agent will:
+   - Run rule-based classification
+   - Run LLM classification
+   - Apply escalation logic
+4. If input is vague:
+   - A follow-up question will be asked
+5. View results:
+   - Category
+   - Severity
+   - Escalation decision
+   - Summary
+   - Recommended action
+   - Final decision
 
-```
-Dataset loaded successfully
-Rule vs LLM agreement: 80.00%
-Pipeline completed successfully.
-Predictions saved to: outputs/incident_predictions.csv
-```
+---
+
+## Analytics Dashboard
+
+Navigate to the "Analytics Dashboard" tab in the UI.
+
+### Metrics
+
+- Total incidents logged
+- Escalation rate (%)
+- Rule vs LLM disagreement rate (%)
+
+### Visualizations
+
+- Incident distribution by category
+- Severity distribution
+- Category vs severity breakdown
+- Escalation by category
+
+### Data Table
+
+A full table of all logged incidents is displayed within the dashboard.
+
+---
+
+## Logged Data
+
+All outputs are saved to:
+
+outputs/triage_log.csv
+
+Each record includes:
+
+- Timestamp
+- Incident text
+- Rule-based prediction
+- LLM category
+- Severity
+- Summary
+- Recommended action
+- Escalation decision
+- Final decision
+
+---
+
+## Data
+
+The data/ directory can be used for:
+
+- Sample incident narratives
+- Batch testing inputs
+- Future dataset expansion
 
 ---
 
 ## Project Structure
 
-```
-healthcare-incident-llm-agent/
-│
+healthcare-incident-llm-triage-agent/
+├── app.py
 ├── data/
-│   └── incident_reports_sample.csv
-│
+│   └── sample_incidents.csv
 ├── outputs/
-│   └── incident_predictions.csv
-│
+│   └── triage_log.csv
 ├── src/
-│   └── test_pipeline.py
-│
-├── .env
+│   ├── triage_agent.py
+│   └── analyze_results.py
 ├── .gitignore
-├── requirements.txt
-└── README.md
-```
+├── README.md
+└── requirements.txt
+
+Note: The .env file is required locally but excluded via .gitignore.
 
 ---
 
 ## Technologies Used
 
 - Python
-- Pandas
 - OpenAI API
 - GPT-4o-mini
+- Streamlit
+- Pandas
+- Matplotlib
 - python-dotenv
 
 ---
 
 ## Future Improvements
 
-Possible extensions for this project include:
-
-- Using a larger real-world healthcare incident dataset
-- Multi-label incident classification
-- Retrieval-Augmented Generation (RAG) using hospital safety guidelines
-- Severity risk scoring models
-- Visualization dashboard for incident monitoring
+- Add confidence scoring
+- Implement Retrieval-Augmented Generation (RAG)
+- Improve escalation logic with historical data
+- Add authentication and roles
+- Deploy as a web application
 
 ---
 
 ## Author
 
 Benjamin Harris
-
