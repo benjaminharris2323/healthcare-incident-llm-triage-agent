@@ -36,17 +36,23 @@ Unlike a simple LLM pipeline, this system introduces:
 ## Agent Workflow
 ```
 User Input (Incident Narrative)  
-↓  
+        │
+        ▼
 Rule-Based Classifier  
-↓  
+        │
+        ▼
 LLM Classifier (GPT-4o-mini)  
-↓  
+        │
+        ▼
 Follow-Up Question (if needed)  
-↓  
+        │
+        ▼
 Escalation Logic  
-↓  
+        │
+        ▼
 Final Decision + Structured Output  
-↓  
+        │
+        ▼
 Log Results (CSV) + Display in UI
 ```
 ---
