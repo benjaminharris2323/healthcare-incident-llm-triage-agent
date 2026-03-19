@@ -160,7 +160,7 @@ The data/ directory can be used for:
 ---
 
 ## Project Structure
-
+```
 healthcare-incident-llm-triage-agent/
 ├── app.py
 ├── data/
@@ -173,7 +173,7 @@ healthcare-incident-llm-triage-agent/
 ├── .gitignore
 ├── README.md
 └── requirements.txt
-
+```
 Note: The .env file is required locally but excluded via .gitignore.
 
 ---
