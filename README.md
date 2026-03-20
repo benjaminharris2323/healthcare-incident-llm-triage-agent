@@ -159,9 +159,9 @@ The LLM improved classification accuracy by **10.0 percentage points** over the 
 
 A proportions z-test was conducted to compare model performance.
 
-Although the LLM achieved higher accuracy (100% vs 90%), the result was **not statistically significant** (p = 0.30), likely due to the small sample size (n = 10).
+Although the LLM achieved higher accuracy (100% vs 90%), the result was **not statistically significant** (p = 0.3049, small sample size n = 10).
 
-This suggests that while the LLM shows promising improvement, additional data would be required to confidently validate the performance gain.
+This suggests that while the LLM shows promising improvement, the result is not yet statistically reliable given the current sample size.
 
 ### Key Insight
 
@@ -176,7 +176,7 @@ This demonstrates that the LLM outperforms the rule-based approach in handling c
 
 ### Conclusion
 
-The LLM-based approach improved performance over the rule-based classifier and reduced misclassification in ambiguous cases. However, further data collection is required to statistically validate the observed improvement.
+The LLM-based approach improved performance over the rule-based classifier and reduced misclassification in ambiguous cases. However, further data collection is required to achieve statistical power and validate the observed improvement.
 
 ---
 
