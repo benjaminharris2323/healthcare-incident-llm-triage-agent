@@ -1,0 +1,11 @@
+event_id,event_text,true_category
+1,Patient received duplicate dose of medication after shift handoff confusion.,medication error
+2,Patient slipped while getting out of bed and reported hip pain.,fall
+3,"IV line became dislodged during patient transfer, requiring reinsertion.",line/tube issue
+4,Nurse documented medication administration in the wrong patient chart.,documentation error
+5,Delay in provider communication postponed discharge instructions.,communication issue
+6,"Patient developed redness and swelling around the surgical site, possible infection.",infection concern
+7,Patient received the wrong medication dose during evening rounds.,medication error
+8,Patient fell while walking to the restroom and complained of knee pain.,fall
+9,Central line dressing was loose and catheter site appeared irritated.,line/tube issue
+10,Provider notes were entered into the wrong chart after shift change.,documentation error
