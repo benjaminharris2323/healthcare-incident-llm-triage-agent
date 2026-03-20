@@ -2,6 +2,8 @@
 
 An AI-powered healthcare incident triage system that combines rule-based logic, large language model (LLM) classification, escalation decision-making, follow-up questioning, persistent logging, analytics, and a Streamlit user interface.
 
+**End-to-end AI triage system with rule-based baseline vs LLM evaluation (+10% accuracy improvement).**
+
 ---
 
 ## Overview
