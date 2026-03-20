@@ -155,6 +155,14 @@ To evaluate whether LLM-based classification improves over a rule-based baseline
 
 The LLM improved classification accuracy by **10.0 percentage points** over the rule-based baseline.
 
+### Statistical Significance
+
+A proportions z-test was conducted to compare model performance.
+
+Although the LLM achieved higher accuracy (100% vs 90%), the result was **not statistically significant** (p = 0.30), likely due to the small sample size (n = 10).
+
+This suggests that while the LLM shows promising improvement, additional data would be required to confidently validate the performance gain.
+
 ### Key Insight
 
 The rule-based classifier failed in cases involving ambiguous language and context.
@@ -164,11 +172,11 @@ Example:
 - **Rule Prediction:** medication error
 - **LLM Prediction:** documentation error (correct)
 
-This demonstrates that the LLM is better at handling contextual nuances than a simple keyword-based baseline.
+This demonstrates that the LLM outperforms the rule-based approach in handling contextual nuances.
 
 ### Conclusion
 
-The LLM-based approach improved performance over the rule-based classifier and reduced misclassification in ambiguous cases, supporting its use for healthcare incident triage.
+The LLM-based approach improved performance over the rule-based classifier and reduced misclassification in ambiguous cases. However, further data collection is required to statistically validate the observed improvement.
 
 ---
 
