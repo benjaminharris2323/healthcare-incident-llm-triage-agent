@@ -1,5 +1,6 @@
 from pathlib import Path
 import pandas as pd
+from statsmodels.stats.proportion import proportions_ztest
 
 # ----------------------------
 # Paths
@@ -81,6 +82,30 @@ print(f"LLM accuracy:        {llm_accuracy:.2%}")
 
 print("\nImprovement over baseline:")
 print(f"LLM improvement: {(llm_accuracy - rule_accuracy):.2%}")
+
+# ----------------------------
+# Statistical significance test
+# ----------------------------
+successes = [
+    df["rule_correct"].sum(),
+    df["llm_correct"].sum()
+]
+
+samples = [
+    len(df),
+    len(df)
+]
+
+z_stat, p_value = proportions_ztest(successes, samples)
+
+print("\nStatistical Test (Proportions Z-Test):")
+print(f"Z-statistic: {z_stat:.4f}")
+print(f"P-value: {p_value:.4f}")
+
+if p_value < 0.05:
+    print("Result: Statistically significant improvement (reject null hypothesis)")
+else:
+    print("Result: No statistically significant difference")
 
 print("\nDetailed results:")
 print(df[[
